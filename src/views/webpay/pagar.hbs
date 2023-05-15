@@ -1,0 +1,21 @@
+<div class="container">
+    <h4 class="text-center m-4">Redireccionando a WebPay Plus <i class="fa-solid fa-spinner fa-spin"></i></h4>
+    <div class="row">
+        <form action="{{webpay_peticion.url}}" name="form" method="POST">
+            <input type="hidden" name="token_ws" value="{{webpay_peticion.token}}">
+        </form>
+    </div>
+</div>
+
+<script>
+window.onload = function(){
+    $('#navReserva').addClass('active');
+    $('#navGaleria').removeClass('active');
+    $('#navInicio').removeClass('active');
+    $('#navContacto').removeClass('active'); 
+    
+};
+$(document).ready(function(){
+    document.form.submit();
+});
+</script>

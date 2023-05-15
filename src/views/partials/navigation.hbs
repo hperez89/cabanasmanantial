@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a href="/" class="navbar-brand ms-4 me-4" style="font-family: zapfinoLocal;">
+        <!--Manantial 7 tazas-->
+        <img src="/img_index/logo_blanco2.png" height="80px">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a href="/" class="nav-link active" aria-current="page" id="navInicio">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/reserva" class="nav-link" id="navReserva">Reservar</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/galeria" class="nav-link" id="navGaleria">Galería</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/contacto" class="nav-link" id="navContacto">Contacto y Ubicación</a>
+                </li>
+                {{#if session.session_activa}}
+                <li class="nav-item">
+                    <a href="/paneladmin" class="nav-link active" aria-current="page" id="navPanelAdmin">Administrar</a>
+                </li>
+                {{/if}}
+            </ul>
+
+            <span class="navbar-text">
+                {{#if session.session_activa}}
+                <a href="/logout" class="btn btn-light text-dark m-0">Logout</a>
+                {{else}}
+                <a href="/login" class="btn btn-outline-light m-0">Login</a>
+                {{/if}}
+                <!--<a href="https://www.instagram.com/#" class="me-4"><i class="fa-brands fa-instagram fa-2xl"></i></a>-->
+
+                <a href="https://www.instagram.com/manantialsietetazas/" class="p-1" style="text-decoration: none; color: white;"><i class="fa-brands fa-instagram fa-x"></i></a>
+                <a href="https://www.facebook.com/manantialsietetazas" class="p-1" style="text-decoration: none; color: white;"><i class="fa-brands fa-facebook fa-x"></i></a>
+                <a href="https://www.tiktok.com/@manantialsietetazas" class="p-1" style="text-decoration: none; color: white;"><i class="fa-brands fa-tiktok fa-x"></i></a>
+                <a href="https://ul.waze.com/ul?ll=-35.44790800%2C-71.03858500&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location" class="p-1" style="text-decoration: none; color: white;"><i class="fa-brands fa-waze fa-x"></i></a>
+                <a href="https://www.airbnb.com/h/manatialsietetazas" class="p-1" style="text-decoration: none; color: white;"><i class="fa-brands fa-airbnb fa-x"></i></a>
+            </span>
+        </div>
+    </div>
+</nav>

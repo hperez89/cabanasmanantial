@@ -1,0 +1,62 @@
+<div class="container">
+    <h3 class="m-4"><i class="fa-solid fa-images"></i> Cabañas y alrededores</h3>
+    <hr>
+
+    <div class="align-items-start galeria-contenedor">
+
+        {{#each filesfiltrados}}
+        
+            <div class="galeria_item"><a href="#" onclick="verimagenModal('{{@index}}')"><img src="img_galeria/{{this}}" class="rounded galeria_img"></a></div>
+        {{/each}}
+    
+    </div>
+
+</div>
+
+<div class="modal fade" tabindex="-1" id="fotofullModal">
+  <div class="modal-dialog modal-dialog-centered modal-lg" style="background-color: transparent;">
+    <div class="modal-content" style="background-color: transparent;">
+        <!--<img src="..." class="rounded img-fluid" id="imgModal">-->
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="false">
+            <div class="carousel-inner">
+                {{#each filesfiltrados}}
+                <div class="carousel-item" id="IMG{{@index}}">
+                <img src="img_galeria/{{this}}" class="d-block w-100 rounded">
+                </div>
+                {{/each}}
+                
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+  </div>
+</div>
+
+<script>
+$(document).ready(function(){
+    $('#navGaleria').addClass('active');
+    $('#navContacto').removeClass('active');
+    $('#navInicio').removeClass('active');
+    $('#navReserva').removeClass('active');
+});
+
+function verimagenModal(id){
+    EliminarActive();
+    $('#IMG'+id).addClass('active');
+    //$("#imgModal").attr('src', src);
+    $('#fotofullModal').modal('show');
+}
+
+function EliminarActive(){
+    for(var i=0; i<100; i++){
+        $('#IMG'+i).removeClass('active');
+    }
+}
+</script>

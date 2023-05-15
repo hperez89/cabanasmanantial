@@ -1,0 +1,154 @@
+<div class="container">
+    <h3 class="m-4">Contacto y Ubicación</h3>
+    <hr>
+    <div class="row">
+        <div class="col-12 d-flex align-items-center">
+            <a href="https://www.instagram.com/manantialsietetazas/" class="p-1" style="text-decoration: none; color: black;"><i class="fa-brands fa-instagram fa-2x"></i></a>
+            <a href="https://www.facebook.com/manantialsietetazas" class="p-1" style="text-decoration: none; color: black;"><i class="fa-brands fa-facebook fa-2x"></i></a>
+            <a href="https://www.tiktok.com/@manantialsietetazas" class="p-1" style="text-decoration: none; color: black;"><i class="fa-brands fa-tiktok fa-2x"></i></a>
+            <a href="https://ul.waze.com/ul?ll=-35.44790800%2C-71.03858500&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location" class="p-1" style="text-decoration: none; color: black;"><i class="fa-brands fa-waze fa-2x"></i></a>
+            <a href="https://www.airbnb.com/h/manatialsietetazas" class="p-1" style="text-decoration: none; color: black;"><i class="fa-brands fa-airbnb fa-2x"></i></a>
+        </div>
+        <div class="col-lg-6 col-12">
+            <div class="col-12">
+                <input type="text" name="nombre" id="nombre" placeholder="Nombre" class="form-control">
+
+                <input type="text" name="correo" id="correo" placeholder="Email" class="form-control">
+
+                <input type="number" name="fono" id="fono" placeholder="Fono ej: 987654321" class="form-control">
+
+                <label for="mensaje" class="form-label">Mensaje:</label>
+                <textarea class="form-control" name="mensaje" id="mensaje" rows="3"> </textarea>
+
+                <div class="d-grid gap-2 mt-1">
+                    <button type="button" class="btn btn-success" onclick="enviarMensaje()" id="btnenviar">Enviar</button>
+                </div>
+
+                <div id="mensajeenviado" class="alert alert-success mt-1" role="alert">
+                Mensaje Enviado Correctamente...
+                </div>
+                <div id="mensajeerrormail" class="alert alert-danger mt-1" role="alert">
+                Hubo problema en enviar el correo, intente nuevamente...
+                </div>
+                <div id="mensajewarning" class="alert alert-warning mt-1" role="alert">
+                Ud. ya ha intentado mandar correos...
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-12 mt-1">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d812.5703231844083!2d-71.0384346!3d-35.4478299!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xb7cdcdd938a30a32!2sManantial%20Siete%20Tazas!5e0!3m2!1ses-419!2scl!4v1670504222298!5m2!1ses-419!2scl" width="100%" height="450" class="rounded" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+        <!-- seccion pagos -->
+        <!--<div class="col-lg-4 col-12 p-3 bg-dark text-white">
+            <img data-src="https://banco.santander.cl/uploads/000/015/014/f3a274e4-310d-4142-ab05-a3f5b806d718/original/logo-getnet-full.svg" class="footer-logo" alt="GetNet By Santander" src="https://banco.santander.cl/uploads/000/015/014/f3a274e4-310d-4142-ab05-a3f5b806d718/original/logo-getnet-full.svg">
+        </div>-->
+        <div class="row bg-dark text-white m-0 rounded">
+            <div class="col-12 d-flex align-items-center justify-content-center">
+                <div><img src="/img_index/logo_white_starlink.png" height="20" class="pe-4 mt-2 imgContactoMovil"></div>
+                <div><img src="/img_index/dtv.svg" height="20" class="pe-4 mt-2 imgContactoMovil"></div>
+  
+                <p class="text-center heading-3 m-0 fontMovilChica">Full equipadas, contamos con Wifi Residencial y cable.</p>
+            </div>
+            <div class="col-lg-6 col-12 d-flex align-items-center">
+                <img data-src="https://banco.santander.cl/uploads/000/015/014/f3a274e4-310d-4142-ab05-a3f5b806d718/original/logo-getnet-full.svg" class="footer-logo m-3" alt="GetNet By Santander" src="https://banco.santander.cl/uploads/000/015/014/f3a274e4-310d-4142-ab05-a3f5b806d718/original/logo-getnet-full.svg" style="height: 50px;">
+                <p class="text-center heading-3 m-0 w-100 fontMovilChica">Aceptamos pagos con tarjeta.</p>
+            </div>
+            <div class="col-lg-6 col-12">
+                 <figure class="m-2">
+                    <img src="https://banco.santander.cl/uploads/000/020/832/d31f683f-c90a-4439-8795-cce920e70496/original/banderines-new.png" class="w-100" alt="Tarjetas">
+                </figure>
+            </div>
+            
+           
+        </div>
+    </div>
+</div>
+
+<script>
+let mensaje_enviado = false;
+$(document).ready(function(){
+    $("#mensajeenviado").hide();
+    $("#mensajeerrormail").hide();
+    $("#mensajewarning").hide();
+    $('#navContacto').addClass('active');
+    $('#navGaleria').removeClass('active');
+    $('#navInicio').removeClass('active');
+    $('#navReserva').removeClass('active');
+});
+
+function enviarMensaje(){
+    const nombre = $("#nombre").val();
+    const correo = $("#correo").val();
+    const fono = $("#fono").val();
+    const mensaje = $("#mensaje").val();
+    let validador = true;
+    //validador
+    if(nombre.length < 1){
+        $("#nombre").addClass('is-invalid');
+        validador = false;
+    }else{
+        $("#nombre").removeClass('is-invalid');
+    }
+
+    var validEmail =  /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+    if (!validEmail.test(correo)){
+        $("#correo").addClass('is-invalid');
+        validador = false;
+    }else{
+        $("#correo").removeClass('is-invalid');
+    }
+ 
+    if(fono.length < 8 || fono.length > 9){
+        $("#fono").addClass('is-invalid');
+        validador = false;
+    }else{
+        $("#fono").removeClass('is-invalid');
+    }
+
+    if(mensaje.length < 20){
+        $("#mensaje").addClass('is-invalid');
+        validador = false;
+    }else{
+        $("#mensaje").removeClass('is-invalid');
+    }
+    //fin validador
+    if(validador){
+        if(mensaje_enviado){
+            $("#mensajewarning").show();
+            $("#btnenviar").attr('disabled', true);
+        }else{
+            $.ajax({
+                method: "POST",
+                url: "/enviarMailContacto",
+                async: true,
+                data: { nombre: nombre, fono: fono, correo: correo, mensaje: mensaje },
+                success: function(resp){
+                    //console.log(resp);
+                    
+                    if(resp){
+                        mensaje_enviado = true;
+                        $("#nombre").removeClass('is-invalid');
+                        $("#correo").removeClass('is-invalid');
+                        $("#fono").removeClass('is-invalid');
+                        $("#mensaje").removeClass('is-invalid');
+                        $("#mensajeerrormail").hide();
+                        $("#mensajeenviado").show();
+                        $("#mensajeenviado").fadeOut(4000);
+
+                    }else{
+                        $("#mensajeenviado").hide();
+                        $("#mensajeerrormail").show();
+                        $("#mensajeerrormail").fadeOut(4000);
+                    }
+                    
+                }
+            });
+        }
+        
+    }
+    /*console.log('nombre: ' + nombre);
+    console.log('correo: ' + correo);
+    console.log('fono: ' + fono);
+    console.log('mensaje: ' + mensaje);*/
+}
+</script>

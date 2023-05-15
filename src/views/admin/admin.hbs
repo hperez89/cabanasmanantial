@@ -1,0 +1,431 @@
+
+<div class="container">
+    <h4 class="text-center m-4">Bienvenido {{nombreusuariofull}}</h4>
+    <hr>
+    <div class="row">
+        <div class="col-12 d-flex align-items-center">
+            <label for="valorcabana" class="form-label">Valor Cabaña: </label>
+        </div>
+        <div class="col-lg-2 col-4">
+          <label for="valorlun" class="form-label fw-bold">Lunes</label>
+          <input type="text" id="valorlun" value="{{valor_lun}}" class="form-control" disabled>
+        </div>
+
+        <div class="col-lg-2 col-4">
+          <label for="valormar" class="form-label fw-bold">Martes</label>
+          <input type="text" id="valormar" value="{{valor_mar}}" class="form-control" disabled>
+        </div>
+
+        <div class="col-lg-2 col-4">
+          <label for="valormie" class="form-label fw-bold">Miercoles</label>
+          <input type="text" id="valormie" value="{{valor_mie}}" class="form-control" disabled>
+        </div>
+
+        <div class="col-lg-2 col-4">
+          <label for="valorjue" class="form-label fw-bold">Jueves</label>
+          <input type="text" id="valorjue" value="{{valor_jue}}" class="form-control" disabled>
+        </div>
+
+        <div class="col-lg-2 col-4">
+          <label for="valorvie" class="form-label fw-bold">Viernes</label>
+          <input type="text" id="valorvie" value="{{valor_vie}}" class="form-control" disabled>
+        </div>
+
+        <div class="col-lg-2 col-4">
+          <label for="valorsab" class="form-label fw-bold">Sabado</label>
+          <input type="text" id="valorsab" value="{{valor_sab}}" class="form-control" disabled>
+        </div>
+
+        <div class="col-lg-2 col-4">
+          <label for="valordom" class="form-label fw-bold">Domingo</label>
+          <input type="text" id="valordom" value="{{valor_dom}}" class="form-control" disabled>
+        </div>
+
+        <!--<div class="col-lg-6 col-12">
+            <input type="text" id="valorcabana" value="{{valorcabana}}" class="form-control" disabled>
+        </div>-->
+        <div class="col-lg-2 col-4 d-flex align-items-end">
+            <button class="btn btn-primary mb-1" data-bs-toggle="modal" data-bs-target="#cambioValorCabanaModal" onclick="valoresCabanasModal()"><i class="fa-solid fa-dollar-sign"></i> Cambiar</button>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-12">
+            <button class="btn btn-success m-1" data-bs-toggle="modal" data-bs-target="#resManualModal" onclick="NewReservaManual()"><i class="fa-solid fa-plus"></i> Reserva Manual</button>
+
+            <button class="btn btn-success m-1" data-bs-toggle="modal" data-bs-target="#cambioclaveModal" onclick="resetCC()"><i class="fa-solid fa-key"></i> Cambiar Clave</button>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-12">
+            <button class="btn btn-warning m-1 text-dark" onclick="VerIngresosPanel()" id="btnIngresosPanel"><i class="fa-solid fa-sack-dollar"></i> Ingresos</button>
+
+            <button class="btn btn-outline-warning m-1 text-dark" onclick="VerReservasPanel()" id="btnReservasPanel"><i class="fa-regular fa-calendar-days"></i> Reservas</button>
+
+            <button class="btn btn-outline-warning m-1 text-dark" onclick="VerDetallePanel()" id="btnDetallaPanel"><i class="fa-solid fa-file-lines"></i> Reserva Semanal</button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12 rounded border shadow" id="ingresosPanel">
+            <h4>Resumen Ingresos</h4>
+            <select name="selectIngPanel" id="selectIngPanel" class="form-select" style="width: 90px !important;"></select>
+            <br>
+            <div id="chartIngresos" class="mb-5">
+
+            </div>
+        </div>
+        <div class="col-12 rounded border shadow" id="reservasPanel" style="display: none;">
+            <h4>Reservas Activas</h4>
+            <!--<select name="selectResPanel" id="selectResPanel" class="form-select" style="width: 90px !important;"></select>-->
+            <div class="row">
+              <div class="col-5">
+                <label for="desde" class="form-label">Desde</label>
+                <div class="input-group mb-3 input-group-sm">
+                  <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
+                  <input type="date" name="desde" id="desde" class="form-control mb-0">
+                </div>
+              </div>
+
+              <div class="col-5">
+                <label for="hasta" class="form-label">Hasta</label>
+                <div class="input-group mb-3 input-group-sm">
+                  <span class="input-group-text"><i class="fa-solid fa-calendar-days"></i></span>
+                  <input type="date" name="hasta" id="hasta" class="form-control mb-0">
+                </div>
+              </div>
+
+              <div class="col-2 d-flex align-items-end">
+                  <button type="button" class="btn btn-secondary mb-3" onclick="actualizarBuscarReservas()"><i class="fa-solid fa-magnifying-glass"></i></button>
+              </div>
+            </div>
+            <hr>
+            <div>
+              <table class="table table-dark">
+                <thead>
+                  <tr>
+                    <th scope="col">Rut</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Cabaña</th>
+                    <th scope="col">OC</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">#</th>
+                  </tr>
+                </thead>
+                <tbody id="tablaEliReservas">
+                  <tr>
+                    <td colspan="4" class="text-center">sin reservas...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+        </div>
+        <div class="col-12 rounded border shadow" id="detallePanel" style="display: none;">
+            <h4>Reserva Semanal</h4>
+            <input type="date" name="fechaDetallePanel" id="fechaDetallePanel" class="form-control" value="{{fechaHoy}}" style="width: 190px !important;">
+            <hr>
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <th><i class="fa-solid fa-house"></i> 1</th>
+                  <th><i class="fa-solid fa-house"></i> 2</th>
+                  <th><i class="fa-solid fa-house"></i> 3</th>
+                  <th><i class="fa-solid fa-house"></i> 4</th>
+                  <th><i class="fa-solid fa-house"></i> 5</th>
+                </thead>
+                <tbody id="tbodyDetallePanel">
+                  <td>
+                    <p class="text-success fw-bold">Check In</p>
+                    <p class="fs-6 mb-0">HECTOR PEREZ</p>
+                    <p class="fw-light font-size-sm fst-italic">966723725</p>
+                  </td>
+                  <td>
+                    <p class="fs-6 mb-0">HECTOR PEREZ</p>
+                    <p class="fw-light font-size-sm fst-italic">966723725</p>
+                  </td>
+                  <td><p class="fw-bold fst-italic text-success">LIBRE</p></td>
+                  <td>
+                    <p class="text-danger  fw-bold">Check Out</p>
+                    <p class="fs-6 mb-0">HECTOR PEREZ</p>
+                    <p class="fw-light font-size-sm fst-italic">966723725</p>
+                  </td>
+                  <td><p class="fw-bold fst-italic text-success">LIBRE</p></td>
+                </tbody>
+              </table>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<!-- modals -->
+<div class="modal fade" id="delReservaModal" tabindex="-1" aria-labelledby="delReservaModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="cambioclaveModalLabel">Eliminar Reserva</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="mensajeEliminaReserva">
+        <p class="text-center"></p>
+      </div>
+      <input type="hidden" name="ocEliReserva" id="ocEliReserva">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger" onclick="ConfirmarEliminarReserva()">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="editReservaModal" tabindex="-1" aria-labelledby="editReservaModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="cambioclaveModalLabel">Modificar Reserva</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-6">
+            <label for="ocModReserva" class="form-label">OC:</label>
+            <div class="input-group mb-3 input-group-sm">
+              <span class="input-group-text"><i class="fa-solid fa-dollar-sign"></i></span>
+              <input type="text" name="ocModReserva" id="ocModReserva" class="form-control mb-0" disabled>
+            </div>
+          </div>
+
+          <div class="col-12 m-2">
+              <a href="#" onclick="cabanaSeleccionarM(1)" class="btn btn-outline-secondary" id="mcheckcab1"><i class="fa-solid fa-house"></i> 1</a>
+              <a href="#" onclick="cabanaSeleccionarM(2)" class="btn btn-outline-secondary" id="mcheckcab2"><i class="fa-solid fa-house"></i> 2</a>
+              <a href="#" onclick="cabanaSeleccionarM(3)" class="btn btn-outline-secondary" id="mcheckcab3"><i class="fa-solid fa-house"></i> 3</a>
+              <a href="#" onclick="cabanaSeleccionarM(4)" class="btn btn-outline-secondary" id="mcheckcab4"><i class="fa-solid fa-house"></i> 4</a>
+              <a href="#" onclick="cabanaSeleccionarM(5)" class="btn btn-outline-secondary" id="mcheckcab5"><i class="fa-solid fa-house"></i> 5</a>
+              <input type="hidden" name="modcabanaformOriginal" id="modcabanaformOriginal">
+              <input type="hidden" name="modcabanaformNew" id="modcabanaformNew">
+          </div>
+          <div class="col-12 d-flex align-items-center justify-content-start">
+              <label for="mfechaIn" class="form-label">Fecha Entrada:</label>
+          </div>
+          <div class="col-12">
+              <input type="date" name="mfechaIn" id="mfechaIn" class="form-control" step="1" disabled>
+          </div>
+
+          <div class="col-12">
+              <label for="mfechaOut" class="form-label">Fecha Ida:</label>
+          </div>
+          <div class="col-12">
+              <input type="date" name="mfechaOut" id="mfechaOut" class="form-control" step="1">
+          </div>
+
+          <div class="alert alert-danger" role="alert" style="display: none;" id="NoDispModReservaMensaje">
+              Reserva No disponible en esa fecha, pruebe con otra cabaña u otro rango de fechas.
+          </div>
+          <div class="alert alert-danger" role="alert" style="display: none;" id="NoDispModReservaMensaje2">
+              xxxxx
+          </div>
+          <div class="alert alert-success" role="alert" style="display: none;" id="SiDispModReservaMensaje">
+              Fechas y cabaña disponible para modificar.
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-warning" onclick="ModificarReservaConfirma()" id="btnModificarReserva" disabled>Modificar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="cambioclaveModal" tabindex="-1" aria-labelledby="cambioclaveModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="cambioclaveModalLabel">Cambiar Clave</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!--<input type="password" name="pass" id="pass" placeholder="Contraseña Actual" class="form-control">-->
+
+        <input type="password" name="passnew1" id="passnew1" placeholder="Nueva Contraseña" class="form-control">
+
+        <input type="password" name="passnew2" id="passnew2" placeholder="Repita Nueva Contraseña" class="form-control">
+
+        <div class="alert alert-danger" role="alert" style="display: none;" id="clavesMensaje">
+            Claves no coinciden.
+        </div>
+        <div class="alert alert-danger" role="alert" style="display: none;" id="NocambioMensaje">
+            Hubo un error al intentar cambiar clave. Contacte a <strong>hectorperezf.1989@gmail.com</strong>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" onclick="CambiarPass()">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="cambioValorCabanaModal" tabindex="-1" aria-labelledby="cambioValorCabanaModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="cambioValorCabanaModalLabel">Cambiar Valor Cabaña</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!--<input type="number" name="valorcabana" id="valorcabana" placeholder="0" class="form-control">-->
+        <!--<div class="input-group mb-3 input-group-lg">
+            <span class="input-group-text"><i class="fa-solid fa-dollar-sign"></i></span>
+            <input type="number" name="Newvalorcabana" id="Newvalorcabana" placeholder="0" class="form-control mb-0">
+        </div>-->
+        <div class="row">
+          <div class="col-6">
+            <label for="nvalor_lun" class="form-label">Lunes</label>
+            <div class="input-group mb-3 input-group-sm">
+              <span class="input-group-text"><i class="fa-solid fa-dollar-sign"></i></span>
+              <input type="number" name="nvalor_lun" id="nvalor_lun" placeholder="0" class="form-control mb-0">
+            </div>
+          </div>
+          
+          <div class="col-6">
+            <label for="nvalor_mar" class="form-label">Martes</label>
+            <div class="input-group mb-3 input-group-sm">
+              <span class="input-group-text"><i class="fa-solid fa-dollar-sign"></i></span>
+              <input type="number" name="nvalor_mar" id="nvalor_mar" placeholder="0" class="form-control mb-0">
+            </div>
+          </div>
+
+          <div class="col-6">
+            <label for="nvalor_mie" class="form-label">Miercoles</label>
+            <div class="input-group mb-3 input-group-sm">
+              <span class="input-group-text"><i class="fa-solid fa-dollar-sign"></i></span>
+              <input type="number" name="nvalor_mie" id="nvalor_mie" placeholder="0" class="form-control mb-0">
+            </div>
+          </div>
+
+          <div class="col-6">
+            <label for="nvalor_jue" class="form-label">Jueves</label>
+            <div class="input-group mb-3 input-group-sm">
+              <span class="input-group-text"><i class="fa-solid fa-dollar-sign"></i></span>
+              <input type="number" name="nvalor_jue" id="nvalor_jue" placeholder="0" class="form-control mb-0">
+            </div>
+          </div>
+
+          <div class="col-6">
+            <label for="nvalor_vie" class="form-label">Viernes</label>
+            <div class="input-group mb-3 input-group-sm">
+              <span class="input-group-text"><i class="fa-solid fa-dollar-sign"></i></span>
+              <input type="number" name="nvalor_vie" id="nvalor_vie" placeholder="0" class="form-control mb-0">
+            </div>
+          </div>
+
+          <div class="col-6">
+            <label for="nvalor_sab" class="form-label">Sabado</label>
+            <div class="input-group mb-3 input-group-sm">
+              <span class="input-group-text"><i class="fa-solid fa-dollar-sign"></i></span>
+              <input type="number" name="nvalor_sab" id="nvalor_sab" placeholder="0" class="form-control mb-0">
+            </div>
+          </div>
+          
+          <div class="col-6">
+            <label for="nvalor_dom" class="form-label">Domingo</label>
+            <div class="input-group mb-3 input-group-sm">
+              <span class="input-group-text"><i class="fa-solid fa-dollar-sign"></i></span>
+              <input type="number" name="nvalor_dom" id="nvalor_dom" placeholder="0" class="form-control mb-0">
+            </div>
+          </div>
+        </div>
+        <div class="alert alert-danger" role="alert" style="display: none;" id="ValorCambioMensaje">
+            Error al cambiar valor.
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" onclick="CambiarValorCabana()">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="resManualModal" tabindex="-1" aria-labelledby="resManualModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="resManualModalLabel">Reserva Manual</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12 m-2">
+              <a href="#" onclick="cabanaSeleccionar(1)" class="btn btn-outline-secondary" id="checkcab1"><i class="fa-solid fa-house"></i> 1</a>
+              <a href="#" onclick="cabanaSeleccionar(2)" class="btn btn-outline-secondary" id="checkcab2"><i class="fa-solid fa-house"></i> 2</a>
+              <a href="#" onclick="cabanaSeleccionar(3)" class="btn btn-outline-secondary" id="checkcab3"><i class="fa-solid fa-house"></i> 3</a>
+              <a href="#" onclick="cabanaSeleccionar(4)" class="btn btn-outline-secondary" id="checkcab4"><i class="fa-solid fa-house"></i> 4</a>
+              <a href="#" onclick="cabanaSeleccionar(5)" class="btn btn-outline-secondary" id="checkcab5"><i class="fa-solid fa-house"></i> 5</a>
+          </div>
+          <div class="col-12 d-flex align-items-center justify-content-start">
+              <label for="fechaIn" class="form-label">Fecha Entrada:</label>
+              <!--<p class="text-danger mb-2 fs-6 fst-italic fw-lighter">(Mínimo 2 días para reservar)</p>-->
+          </div>
+          <div class="col-12">
+              <input type="date" name="fechaIn" id="fechaIn" class="form-control" step="1" value="{{fechaHoy}}">
+          </div>
+
+          <div class="col-12">
+              <label for="fechaOut" class="form-label">Fecha Ida:</label>
+          </div>
+          <div class="col-12">
+              <input type="date" name="fechaOut" id="fechaOut" class="form-control" step="1" disabled>
+          </div>
+          <div class="alert alert-danger" role="alert" style="display: none;" id="NoDispReservaMensaje">
+              Reserva No disponible en esa fecha, pruebe con otra cabaña u otro rango de fechas.
+          </div>
+
+          <div class="col-12">
+            <label for="monto" class="form-label">Monto Reserva:</label>
+            <input type="number" name="monto" id="monto" class="form-control" placeholder="90000">
+          </div>
+          <div class="col-12">
+            <input type="text" name="rut" id="rut" placeholder="Rut" class="form-control">
+            <input type="text" name="nombre" id="nombre" placeholder="Nombre" class="form-control">
+            <input type="text" name="correo" id="correo" placeholder="Email" class="form-control">
+            <input type="number" name="fono" id="fono" placeholder="Fono ej: 987654321" class="form-control">
+            <input type="hidden" name="cabanaform" id="cabanaform">
+          </div>
+        </div>
+
+        <div class="alert alert-danger" role="alert" style="display: none;" id="errorResManualMensaje">
+            Favor ingrese todos los datos.
+        </div>
+        <div class="alert alert-danger" role="alert" style="display: none;" id="NoReservaManualMensaje">
+            Hubo un error al registrar reserva. Contacte a <strong>hectorperezf.1989@gmail.com</strong>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" onclick="GuardarReservaManual()" id="btnReservaManual" disabled>Guardar Reserva</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- toast -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 9;">
+  <div id="mensajepopup" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <i class="fa-solid fa-check pe-2 text-success"></i>
+      <strong class="me-auto">Notificación</strong>
+      <small>Justo Ahora</small>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body text-center" id="mensajetoast">
+      ...
+    </div>
+  </div>
+</div>
+
+
+<!-- JS -->
+<script src="/js/admin.js"></script>

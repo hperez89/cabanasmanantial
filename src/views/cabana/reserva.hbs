@@ -1,0 +1,82 @@
+
+<div class="container">
+    <h3 class="m-4"><i class="fa-regular fa-calendar-days"></i> Reservar Fecha</h3>
+    <hr>
+    <form action="/webpay" name="formreserva" method="POST">
+    <div class="row">
+        
+        <div class="col-lg-6 col-12">
+            <div class="col-12">
+                <label for="fechaOut" class="form-label">Seleccione Cabaña:</label>
+            </div>
+            <div class="col-12 m-2">
+                <a href="#" onclick="cabanaSeleccionar(1)" class="btn btn-outline-secondary" id="checkcab1"><i class="fa-solid fa-house"></i> 1</a>
+                <a href="#" onclick="cabanaSeleccionar(2)" class="btn btn-outline-secondary" id="checkcab2"><i class="fa-solid fa-house"></i> 2</a>
+                <a href="#" onclick="cabanaSeleccionar(3)" class="btn btn-outline-secondary" id="checkcab3"><i class="fa-solid fa-house"></i> 3</a>
+                <a href="#" onclick="cabanaSeleccionar(4)" class="btn btn-outline-secondary" id="checkcab4"><i class="fa-solid fa-house"></i> 4</a>
+                <a href="#" onclick="cabanaSeleccionar(5)" class="btn btn-outline-secondary" id="checkcab5"><i class="fa-solid fa-house"></i> 5</a>
+            </div>
+            <div class="col-12 d-flex align-items-center justify-content-start">
+                <label for="fechaIn" class="form-label">Fecha Entrada:</label>
+                <p class="text-danger mb-2 fs-6 fst-italic fw-lighter">(Mínimo 2 días para reservar)</p>
+            </div>
+            <div class="col-12">
+                <input type="date" name="fechaIn" id="fechaIn" class="form-control" step="1" min="{{fechaHoy}}" value="{{fechaHoy}}">
+            </div>
+
+            <div class="col-12">
+                <label for="fechaOut" class="form-label">Fecha Ida:</label>
+            </div>
+            <div class="col-12">
+                <input type="date" name="fechaOut" id="fechaOut" class="form-control" step="1" disabled>
+            </div>
+
+            <div class="col-12 mt-4 d-grid gap-2">
+                <a class="btn btn-success" onclick="revisarDisponibilidad()" id="btnDisp">Ver disponibilidad</a>
+            </div>
+        </div>
+        <div class="col-lg-6 col-12 mt-4 mt-lg-1" id="ErrorReserva" style="display: none;">
+             <div class="alert alert-danger" role="alert">
+            Error al generar reserva, vuelva a intentarlo.
+            </div>
+        </div>
+        <div class="col-lg-6 col-12 mt-4 mt-lg-1" id="revisando" style="display: none;">
+            <div class="alert alert-success" role="alert" id="mensajeOK" style="display: none;">
+            Cabaña disponible para reservar!
+            </div>
+            <div class="alert alert-danger" role="alert" id="mensajeNO" style="display: none;">
+            NO DISPONIBLE...Favor revise otro rango de fecha u otra cabaña!
+            </div>
+
+            <div id="reservaDatos" style="display: none;">
+                <p class="text-center">Datos para reserva:</p>
+                <input type="text" name="rut" id="rut" placeholder="Rut" class="form-control">
+                <input type="text" name="nombre" id="nombre" placeholder="Nombre" class="form-control">
+                <input type="text" name="correo" id="correo" placeholder="Email" class="form-control">
+                <input type="number" name="fono" id="fono" placeholder="Fono ej: 987654321" class="form-control">
+                <input type="hidden" name="cuantos_dias" id="cuantos_dias">
+                <input type="hidden" name="cabanaform" id="cabanaform">
+                <div class="d-grid gap-2 mt-1">
+                    <button type="button" class="btn btn-success" onclick="ReservarFecha()" id="btnReservar">Pagar Reserva</button>
+                </div>
+            </div>
+            
+            <div id="posiblesFechas" style="display: none;">
+                <p class="text-center">Fechas sugeridas:</p>
+                <hr>
+                <p class="text-success"><i class="fa-regular fa-calendar-days"></i> 20-12-2022</p>
+            </div>
+            
+
+        </div>
+        
+        <div class="col-12 pt-4 pb-4" id="calendar">
+
+        </div>
+    </div>
+    </form>
+</div>
+
+
+
+<script src="/js/reserva.js"></script>

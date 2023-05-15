@@ -1,0 +1,46 @@
+<div class="container">
+    <h4 class="text-center m-4">Resumen Orden de Compra - Confirmar Reserva</h4>
+    <form action="/webpay_pagar" name="formpagar" method="POST">
+    <div class="row m-2">
+        <div class="col-12 col-lg-6">
+            <label for="fechaOut" class="form-label">Reserva por:</label>
+        </div>
+        <div class="col-12 col-lg-6">
+            <input type="text" name="reservapor" id="reservapor" class="form-control" value="{{cuantosdias}} días" disabled>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <label for="fechaOut" class="form-label">Monto:</label>
+        </div>
+        <div class="col-12 col-lg-6">
+            <input type="hidden" name="umount" id="umount" value="{{monto}}">
+            <input type="text" name="reservapor" id="reservapor" class="form-control" value="{{montoformato}}" disabled>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <label for="fechaOut" class="form-label">OC:</label>
+        </div>
+        <div class="col-12 col-lg-6">
+            <input type="text" name="oc" id="oc" class="form-control" value="{{oc}}" disabled>
+        </div>
+
+
+        <div class="col-12 mt-4 d-flex align-items-center justify-content-center">
+            <a class="btn btn-success ps-5 pe-5" onclick="pagar()" href="#">Pagar <i class="fa-regular fa-credit-card ps-2"></i></a>
+            <!--<input type="submit" value="Pagar" class="btn btn-success ps-5 pe-5">-->
+        </div>
+
+       
+        
+        <div class="col-12 text-center mb-4 mt-4">
+             <hr>
+            <picture>
+                <source media="(min-width:701px)" srcset="https://publico.transbank.cl/o/fragmentos-theme/images/logo_transbank_color.svg">
+                <img src="https://publico.transbank.cl/o/fragmentos-theme/images/logo_transbank_color.svg" width="168" height="37" alt="Transbank es la opción de pago más conveniente para tu negocio y para todo tipo de comercios en Chile">
+            </picture>
+        </div>
+    </div>
+    </form>
+</div>
+
+<script src="/js/webpay.js"></script>

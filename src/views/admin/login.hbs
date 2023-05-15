@@ -1,0 +1,126 @@
+<div class="container d-flex justify-content-center align-items-center pt-5">
+    <form action="/admin" method="POST" name="formlogin" class="m-0" style="width: 80%;">
+    <div class="row rounded p-4 border shadow m-0">
+        <div class="col-12 d-flex justify-content-center">
+            <i class="fa-solid fa-user-gear fa-5x p-4"></i>
+        </div>
+        <div class="col-12">
+            <h4 class="text-center">Ingresar</h4>
+        </div>
+
+        <div class="col-12">
+            <div class="input-group mb-3 input-group-lg">
+                <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                <input type="text" name="user" id="user" placeholder="Usuario" class="form-control mb-0">
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="input-group mb-3 input-group-lg">
+                <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
+                <input type="password" name="pass" id="pas" placeholder="Contraseña" class="form-control mb-0">
+            </div>
+        </div>
+
+        {{#if errorMensaje}}
+        <div class="col-12">
+            <div class="alert alert-danger" role="alert">
+                Datos ingresados no son correctos. <strong>Por favor, inténtalo nuevamente.</strong>
+            </div>
+        </div>
+        {{/if}}
+        <div class="d-grid gap-2 mt-1">
+            <button type="button" class="btn btn-success" onclick="loginsend()" id="btnLogin">Ingresar</button>
+        </div>
+
+        <br>
+        <hr>
+        <div class="col-12 text-center">
+            <a href="#" class="fs-6 fst-italic" onclick="resetCR()" data-bs-toggle="modal" data-bs-target="#recuperarclaveModal" style="text-decoration: none;">¿Olvidó su contraseña?</a>
+        </div>
+        
+    </div>
+    </form>
+</div>
+
+<!-- modal recuperar contraseña -->
+<div class="modal fade" id="recuperarclaveModal" tabindex="-1" aria-labelledby="recuperarclaveModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="recuperarclaveModalLabel">Recuperar Clave</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <input type="email" name="correoRC" id="correoRC" placeholder="Correo del usuario" class="form-control">
+
+        <div class="alert alert-danger" role="alert" style="display: none;" id="errorCorreo1Mensaje">
+            Correo ingresado no está registrado o asociado a un usuario.
+        </div>
+        <div class="alert alert-success" role="alert" style="display: none;" id="errorCorreo2Mensaje">
+            Correo enviado exitosamente con una constraseña nueva, recuerde cambiar la clave por una personal.
+        </div>
+        <div class="alert alert-danger" role="alert" style="display: none;" id="NoEnvioMensaje">
+            Hubo un error al intentar cambiar clave. Contacte a <strong>hectorperezf.1989@gmail.com</strong>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" onclick="EnviarCorreo()">Enviar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- fin modal -->
+
+<script>
+    function loginsend(){
+        document.formlogin.submit();
+    }
+
+    function EnviarCorreo(){
+        var correoRC = $("#correoRC").val();
+        var validEmail =  /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
+        if (!validEmail.test(correoRC)){
+            $("#correoRC").addClass('is-invalid');
+            //email no tiene formato
+            
+        }else{
+            $("#correoRC").removeClass('is-invalid');
+            //correo valido
+            $.ajax({
+            method: "POST",
+            url: "/RecuperaPass",
+            async: true,
+            data: { correoRC: correoRC},
+            success: function(resp){
+                console.log(resp);
+                if(resp == '1'){ 
+                    $("#errorCorreo1Mensaje").hide();
+                    $("#NoEnvioMensaje").hide();
+                    $("#errorCorreo2Mensaje").show();
+                }
+                if(resp == '2'){
+                    $("#NoEnvioMensaje").hide();
+                    $("#errorCorreo2Mensaje").hide();
+                    $("#errorCorreo1Mensaje").show();
+                }
+                if(resp == '3'){
+                    $("#errorCorreo1Mensaje").hide();
+                    $("#errorCorreo2Mensaje").hide();
+                    $("#NoEnvioMensaje").show();
+                }
+            }
+        });
+        }   
+    }
+
+    function resetCR(){
+        $("#errorCorreo1Mensaje").hide();
+        $("#errorCorreo2Mensaje").hide();
+        $("#NoEnvioMensaje").hide();
+        $("#correoRC").val('');
+    }
+</script>

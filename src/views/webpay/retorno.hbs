@@ -1,0 +1,75 @@
+<div class="container">
+    <h3 class="m-4"><i class="fa-regular fa-calendar-days"></i> Fecha Reservada</h3>
+    <hr>
+    <div class="alert {{clasemensaje}}" role="alert">
+        {{mensaje}}
+    </div>
+    {{#if pagoautorizado}}
+    <div class="row mt-4">
+        <h4 class="text-center m-3">Comprobante de Pago</h4>
+        <div class="col-5">
+            <label for="oc" class="form-label">OC:</label>
+        </div>
+        <div class="col-7">
+            <input type="text" name="oc" id="oc" class="form-control" value="{{webpay_respuesta.buy_order}}" disabled>
+        </div>
+
+        <div class="col-5">
+            <label for="fechapago" class="form-label">Fecha Pago:</label>
+        </div>
+        <div class="col-7">
+            <input type="text" name="fechapago" id="fechapago" class="form-control" value="{{webpay_respuesta.transaction_date}}" disabled>
+        </div>
+
+        <div class="col-5">
+            <label for="card" class="form-label">Tarjeta Pago:</label>
+        </div>
+        <div class="col-7">
+            <input type="text" name="card" id="card" class="form-control" value="XXXX XXXX XXXX {{webpay_respuesta.card_detail.card_number}}" disabled>
+        </div>
+
+        <div class="col-5">
+            <label for="monto" class="form-label">Monto:</label>
+        </div>
+        <div class="col-7">
+            <input type="text" name="monto" id="monto" class="form-control" value="{{webpay_respuesta.amount}}" disabled>
+        </div>
+
+        <div class="col-5">
+            <label for="tp" class="form-label">Tipo de pago:</label>
+        </div>
+        <div class="col-7">
+            <input type="text" name="tp" id="tp" class="form-control" value="{{webpay_respuesta.payment_type_code}}" disabled>
+        </div>
+
+        {{#if tienecuotas}}
+
+        <div class="col-5">
+            <label for="nc" class="form-label">Número Cuotas:</label>
+        </div>
+        <div class="col-7">
+            <input type="text" name="nc" id="nc" class="form-control" value="{{webpay_respuesta.installments_number}}" disabled>
+        </div>
+
+        <div class="col-5">
+            <label for="vc" class="form-label">Valor Cuota:</label>
+        </div>
+        <div class="col-7">
+            <input type="text" name="vc" id="vc" class="form-control" value="{{webpay_respuesta.installments_amount}}" disabled>
+        </div>
+
+        {{/if}}
+    {{/if}}   
+    </div>
+    
+ 
+</div>
+
+<script>
+$(document).ready(function(){
+    $('#navReserva').addClass('active');
+    $('#navGaleria').removeClass('active');
+    $('#navInicio').removeClass('active');
+    $('#navContacto').removeClass('active'); 
+});
+</script>
